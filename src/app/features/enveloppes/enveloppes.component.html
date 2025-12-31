@@ -1,0 +1,67 @@
+<div class="container mx-auto p-4">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold">Mes Enveloppes</h1>
+    <button class="btn btn-primary" (click)="afficherFormulaire = true" [disabled]="!budgetSelectionne">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+      </svg>
+      Nouvelle enveloppe
+    </button>
+  </div>
+
+  <div class="form-control w-full max-w-xs mb-6">
+    <label class="label">
+      <span class="label-text">Sélectionner un budget</span>
+    </label>
+    <select class="select select-bordered" [(ngModel)]="budgetSelectionne" (change)="chargerEnveloppes()">
+      <option [value]="null">Sélectionner un budget</option>
+      <option *ngFor="let budget of budgets" [value]="budget.id">
+        Budget {{ budget.montant }}€
+      </option>
+    </select>
+  </div>
+
+  <div *ngIf="afficherFormulaire" class="card bg-base-100 shadow-xl mb-6">
+    <div class="card-body">
+      <h2 class="card-title">Créer une enveloppe</h2>
+      <form [formGroup]="formulaire" (ngSubmit)="soumettre()">
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">Nom</span>
+          </label>
+          <input type="text" class="input input-bordered" formControlName="nom" />
+        </div>
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">Montant alloué</span>
+          </label>
+          <input type="number" step="0.01" class="input input-bordered" formControlName="montantAlloue" />
+        </div>
+        <div class="card-actions justify-end mt-4">
+          <button type="button" class="btn btn-ghost" (click)="annuler()">Annuler</button>
+          <button type="submit" class="btn btn-primary" [disabled]="!formulaire.valid">Créer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div *ngIf="enChargement" class="flex justify-center">
+    <span class="loading loading-spinner loading-lg"></span>
+  </div>
+
+  <div *ngIf="!enChargement" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div *ngFor="let enveloppe of enveloppes" class="card bg-base-100 shadow-xl">
+      <div class="card-body">
+        <h2 class="card-title">{{ enveloppe.nom }}</h2>
+        <p class="text-2xl font-bold">{{ enveloppe.montantDepense }}€ / {{ enveloppe.montantAlloue }}€</p>
+        <progress class="progress progress-primary" [value]="obtenirPourcentageUtilise(enveloppe)" max="100"></progress>
+        <p class="text-sm">{{ obtenirPourcentageUtilise(enveloppe).toFixed(0) }}% utilisé</p>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!enChargement && enveloppes.length === 0 && budgetSelectionne" class="text-center py-12">
+    <p class="text-base-content/60">Aucune enveloppe pour ce budget</p>
+  </div>
+</div>
+

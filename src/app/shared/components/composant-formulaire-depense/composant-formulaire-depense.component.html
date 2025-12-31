@@ -1,0 +1,74 @@
+<div class="card bg-base-100 shadow-xl">
+  <div class="card-body">
+    <h2 class="card-title">Ajouter une dépense</h2>
+    <form [formGroup]="formulaire" (ngSubmit)="onSubmit()">
+      <div class="form-control w-full">
+        <label class="label">
+          <span class="label-text">Montant</span>
+        </label>
+        <input
+          type="number"
+          step="0.01"
+          placeholder="0.00"
+          class="input input-bordered w-full"
+          formControlName="montant"
+        />
+      </div>
+
+      <div class="form-control w-full">
+        <label class="label">
+          <span class="label-text">Description</span>
+        </label>
+        <input
+          type="text"
+          placeholder="Description"
+          class="input input-bordered w-full"
+          formControlName="description"
+        />
+      </div>
+
+      <div class="form-control w-full">
+        <label class="label">
+          <span class="label-text">Catégorie</span>
+        </label>
+        <select class="select select-bordered w-full" formControlName="categorieId">
+          <option [value]="null">Sélectionner une catégorie</option>
+          <option *ngFor="let categorie of categories" [value]="categorie.id">
+            {{ categorie.nom }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-control w-full">
+        <label class="label">
+          <span class="label-text">Date</span>
+        </label>
+        <input
+          type="datetime-local"
+          class="input input-bordered w-full"
+          formControlName="dateDepense"
+        />
+      </div>
+
+      <div class="form-control w-full">
+        <label class="label">
+          <span class="label-text">Adresse</span>
+        </label>
+        <input
+          type="text"
+          placeholder="Adresse"
+          class="input input-bordered w-full"
+          formControlName="adresse"
+        />
+      </div>
+
+      <div class="card-actions justify-end mt-4">
+        <button type="button" class="btn btn-ghost" (click)="onAnnuler()">Annuler</button>
+        <button type="submit" class="btn btn-primary" [disabled]="!formulaire.valid">
+          Enregistrer
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+

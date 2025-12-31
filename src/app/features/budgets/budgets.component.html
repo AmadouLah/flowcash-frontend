@@ -1,0 +1,62 @@
+<div class="container mx-auto p-4">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold">Mes Budgets</h1>
+    <button class="btn btn-primary" (click)="afficherFormulaire = true">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+      </svg>
+      Nouveau budget
+    </button>
+  </div>
+
+  <div *ngIf="afficherFormulaire" class="card bg-base-100 shadow-xl mb-6">
+    <div class="card-body">
+      <h2 class="card-title">Créer un budget</h2>
+      <form [formGroup]="formulaire" (ngSubmit)="soumettre()">
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">Montant</span>
+          </label>
+          <input type="number" step="0.01" class="input input-bordered" formControlName="montant" />
+        </div>
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">Date de début</span>
+          </label>
+          <input type="date" class="input input-bordered" formControlName="dateDebut" />
+        </div>
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">Date de fin</span>
+          </label>
+          <input type="date" class="input input-bordered" formControlName="dateFin" />
+        </div>
+        <div class="card-actions justify-end mt-4">
+          <button type="button" class="btn btn-ghost" (click)="annuler()">Annuler</button>
+          <button type="submit" class="btn btn-primary" [disabled]="!formulaire.valid">Créer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div *ngIf="enChargement" class="flex justify-center">
+    <span class="loading loading-spinner loading-lg"></span>
+  </div>
+
+  <div *ngIf="!enChargement" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div *ngFor="let budget of budgets" class="card bg-base-100 shadow-xl">
+      <div class="card-body">
+        <h2 class="card-title">{{ budget.montant }}€</h2>
+        <p>Du {{ budget.dateDebut | date:'dd/MM/yyyy' }} au {{ budget.dateFin | date:'dd/MM/yyyy' }}</p>
+        <div class="badge" [class.badge-success]="budget.actif" [class.badge-ghost]="!budget.actif">
+          {{ budget.actif ? 'Actif' : 'Inactif' }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!enChargement && budgets.length === 0" class="text-center py-12">
+    <p class="text-base-content/60">Aucun budget enregistré</p>
+  </div>
+</div>
+

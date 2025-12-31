@@ -1,0 +1,47 @@
+<div class="container mx-auto p-4">
+  <h1 class="text-4xl font-bold mb-6">Dashboard</h1>
+
+  <div *ngIf="enChargement" class="flex justify-center">
+    <span class="loading loading-spinner loading-lg"></span>
+  </div>
+
+  <div *ngIf="!enChargement && apercu" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+    <div class="stat bg-base-200 rounded-lg shadow">
+      <div class="stat-title">Dépenses du mois</div>
+      <div class="stat-value text-primary">{{ apercu.depensesMois }}€</div>
+    </div>
+    <div class="stat bg-base-200 rounded-lg shadow">
+      <div class="stat-title">Budget restant</div>
+      <div class="stat-value text-success">{{ apercu.budgetRestant }}€</div>
+    </div>
+    <div class="stat bg-base-200 rounded-lg shadow">
+      <div class="stat-title">Dépenses aujourd'hui</div>
+      <div class="stat-value text-warning">{{ apercu.depensesJour }}€</div>
+    </div>
+    <div class="stat bg-base-200 rounded-lg shadow">
+      <div class="stat-title">Tendance</div>
+      <div class="stat-value text-info">{{ apercu.tendance }}</div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+    <div class="card bg-base-100 shadow-xl">
+      <div class="card-body">
+        <h2 class="card-title">Actions rapides</h2>
+        <div class="flex flex-col gap-2">
+          <a routerLink="/depenses" class="btn btn-primary">Ajouter une dépense</a>
+          <a routerLink="/budgets" class="btn btn-outline">Gérer les budgets</a>
+          <a routerLink="/assistant" class="btn btn-outline">Parler à l'assistant IA</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="card bg-base-100 shadow-xl">
+      <div class="card-body">
+        <h2 class="card-title">Dernières dépenses</h2>
+        <a routerLink="/depenses" class="link link-primary">Voir toutes les dépenses →</a>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,62 @@
+<div class="min-h-screen bg-base-100">
+  <div class="navbar bg-primary text-primary-content">
+    <div class="navbar-start">
+      <a class="btn btn-ghost text-xl" routerLink="/dashboard">FlowCash</a>
+    </div>
+    <div class="navbar-center hidden lg:flex">
+      <ul class="menu menu-horizontal px-1">
+        <li><a routerLink="/dashboard" routerLinkActive="active">Dashboard</a></li>
+        <li><a routerLink="/depenses" routerLinkActive="active">Dépenses</a></li>
+        <li><a routerLink="/budgets" routerLinkActive="active">Budgets</a></li>
+        <li><a routerLink="/enveloppes" routerLinkActive="active">Enveloppes</a></li>
+        <li><a routerLink="/categories" routerLinkActive="active">Catégories</a></li>
+        <li><a routerLink="/groupes" routerLinkActive="active">Groupes</a></li>
+        <li><a routerLink="/tickets" routerLinkActive="active">Tickets</a></li>
+        <li><a routerLink="/defis" routerLinkActive="active">Défis</a></li>
+        <li><a routerLink="/assistant" routerLinkActive="active">Assistant IA</a></li>
+      </ul>
+    </div>
+    <div class="navbar-end">
+      <div class="dropdown dropdown-end">
+        <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+          <div class="w-10 rounded-full bg-neutral text-neutral-content flex items-center justify-center">
+            <span>{{ nomUtilisateur.charAt(0).toUpperCase() }}</span>
+          </div>
+        </div>
+        <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 text-base-content">
+          <li><a>{{ nomUtilisateur }}</a></li>
+          <li><a (click)="deconnecter()">Déconnexion</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="drawer lg:drawer-open">
+    <input id="drawer-toggle" type="checkbox" class="drawer-toggle" />
+    <div class="drawer-content flex flex-col">
+      <label for="drawer-toggle" class="btn btn-square btn-ghost lg:hidden absolute top-2 left-2 z-10">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-6 h-6 stroke-current">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </label>
+      <div class="flex-1 p-4">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+    <div class="drawer-side">
+      <label for="drawer-toggle" class="drawer-overlay"></label>
+      <ul class="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
+        <li><a routerLink="/dashboard" routerLinkActive="active">📊 Dashboard</a></li>
+        <li><a routerLink="/depenses" routerLinkActive="active">💰 Dépenses</a></li>
+        <li><a routerLink="/budgets" routerLinkActive="active">📈 Budgets</a></li>
+        <li><a routerLink="/enveloppes" routerLinkActive="active">✉️ Enveloppes</a></li>
+        <li><a routerLink="/categories" routerLinkActive="active">🏷️ Catégories</a></li>
+        <li><a routerLink="/groupes" routerLinkActive="active">👥 Groupes</a></li>
+        <li><a routerLink="/tickets" routerLinkActive="active">🧾 Tickets</a></li>
+        <li><a routerLink="/defis" routerLinkActive="active">🎯 Défis</a></li>
+        <li><a routerLink="/assistant" routerLinkActive="active">🤖 Assistant IA</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+

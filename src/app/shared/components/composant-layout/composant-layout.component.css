@@ -1,0 +1,4 @@
+.active {
+  @apply bg-primary text-primary-content;
+}
+

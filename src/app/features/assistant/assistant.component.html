@@ -1,0 +1,41 @@
+<div class="container mx-auto p-4 h-full flex flex-col">
+  <h1 class="text-3xl font-bold mb-6">Assistant IA</h1>
+
+  <div class="flex-1 overflow-y-auto mb-4 space-y-4">
+    <div *ngFor="let message of messages" class="chat" [class.chat-start]="message.role === 'assistant'" [class.chat-end]="message.role === 'user'">
+      <div class="chat-header">
+        {{ message.role === 'user' ? 'Vous' : 'Assistant' }}
+        <time class="text-xs opacity-50">{{ message.timestamp | date:'HH:mm' }}</time>
+      </div>
+      <div class="chat-bubble" [class.chat-bubble-primary]="message.role === 'user'" [class.chat-bubble-secondary]="message.role === 'assistant'">
+        {{ message.contenu }}
+      </div>
+    </div>
+
+    <div *ngIf="enChargement" class="chat chat-start">
+      <div class="chat-bubble chat-bubble-secondary">
+        <span class="loading loading-dots"></span>
+      </div>
+    </div>
+  </div>
+
+  <form [formGroup]="formulaire" (ngSubmit)="envoyerMessage()" class="flex gap-2">
+    <input
+      type="text"
+      placeholder="Tapez votre message..."
+      class="input input-bordered flex-1"
+      formControlName="message"
+      [disabled]="enChargement"
+    />
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="!formulaire.valid || enChargement"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+      </svg>
+    </button>
+  </form>
+</div>
+
